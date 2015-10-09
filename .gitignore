@@ -1,0 +1,15 @@
+*.py[cod]
+/.hgignore~
+/.gitignore~
+/.hgtags
+/.hg/
+/.tox/
+/var/
+
+/MINDBUCKET.rst
+/build/
+/builddocs/
+/builddocs.zip
+/dist/
+/src/charmy.egg-info
+/src/charmy/var/*.*

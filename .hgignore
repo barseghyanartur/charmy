@@ -1,0 +1,15 @@
+syntax: regexp
+\.pyc$
+\.hgignore~
+\.git
+\.gitignore~
+\.tox/
+^var/
+
+^build/
+^builddocs/
+^builddocs.zip
+^dist/
+^src/charmy\.egg-info
+^src/charmy/var/(?!\.keep).+$
+
