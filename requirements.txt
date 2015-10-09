@@ -27,4 +27,5 @@ six==1.4.0
 snowballstemmer==1.2.0
 sphinx-rtd-theme==0.1.9
 traitlets==4.0.0
+wheel==0.26.0
 wsgiref==0.1.2
