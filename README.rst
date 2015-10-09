@@ -8,7 +8,7 @@ Supported systems
 At the moment works for Linux only.
 
 Although `charmy` would work on any Linux system (download, sym-link), some
-extra things, like creating a .desktop file for Ubuntu launcher, are done for
+extra things, like creating a `.desktop` file for Ubuntu launcher, are done for
 specific systems only.
 
 Installation
@@ -65,7 +65,7 @@ Install the latest professional version::
 By default `charmy` installs PyCharm in the `PyCharm` directory. If you want it
 to be installed elsewhere provide --destination directive::
 
-    charmy install --destination=pycharm
+    charmy install --destination=/home/user/pycharm/
 
 Note, that `charmy` remembers your last destination, so once you have
 specified a destination, you don't have to specify it again (unless you
@@ -73,8 +73,8 @@ want to change installation directory).
 
 Ubuntu
 ------
-When installing on Ubuntu, `charmy` creates a .desktop file for to be drag and
-dropped to the Unity launcher. The .desktop file is located at::
+When installing on Ubuntu, `charmy` creates a `.desktop` file for to be drag
+and dropped to the Unity launcher. The `.desktop` file is located at::
 
     ~/.local/share/applications/jetbrains-pycharm-ce.desktop
 
