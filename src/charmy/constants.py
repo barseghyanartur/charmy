@@ -7,7 +7,8 @@ __all__ = (
     'EDITION_PROFESSIONAL', 'EDITION_COMMUNITY', 'EDITIONS', 'DEFAULT_EDITION',
     'DOWNLOAD_LINK_PATTERN', 'DOWNLOAD_PAGE_LINK', 'VERSION_JS_URL',
     'ACTION_INSTALL', 'ACTION_UNINSTALL', 'ACTION_ACTIVATE', 'ACTION_VERSIONS',
-    'ACTION_CHECK_LATEST_AVAILABLE', 'ACTIONS', 'DOWNLOAD_CACHE_DIR',
+    'ACTION_CHECK_LATEST_AVAILABLE', 'ACTION_RESET_SETTINGS', 'ACTIONS',
+    'DOWNLOAD_CACHE_DIR',
     'LATEST_INSTALLATION_DIR', 'DB_NAME', 'CONFIG_INI_FILE_NAME',
     'LINUX_LATEST_INSTALLATION_EXEC', 'LINUX_TEMP_DIR', 'LINUX_CONFIG_DIR',
     'LINUX_INSTALLATION_EXEC', 'LINUX_INSTALLATION_ICON',
@@ -70,16 +71,18 @@ VERSION_JS_URL = 'https://www.jetbrains.com/js2/version.js'
 # ******************************** Actions **********************************
 # ***************************************************************************
 ACTION_INSTALL = 'install'
-ACTION_UNINSTALL = 'unistall'
+ACTION_UNINSTALL = 'uninstall'
 ACTION_ACTIVATE = 'activate'
 ACTION_VERSIONS = 'versions'
 ACTION_CHECK_LATEST_AVAILABLE = 'check-latest-available'
+ACTION_RESET_SETTINGS = 'reset-settings'
 ACTIONS = (
     ACTION_INSTALL,
     ACTION_ACTIVATE,
     ACTION_UNINSTALL,
     ACTION_VERSIONS,
-    ACTION_CHECK_LATEST_AVAILABLE
+    ACTION_CHECK_LATEST_AVAILABLE,
+    ACTION_RESET_SETTINGS
 )
 
 # ***************************************************************************

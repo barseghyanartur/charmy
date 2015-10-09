@@ -108,6 +108,15 @@ class BaseInstaller(object):
         self.distribution_cls = self._get_distribution_class()
         self.db_ready = True
 
+    def drop_db(self):
+        """
+        Drops the database.
+
+        :return:
+        """
+        if os.path.isfile(self.db_name):
+            os.remove(self.db_name)
+
     def _get_distribution_class(self):
         """
         Gets the `Distribution` model for saving installed distributions.
@@ -123,22 +132,29 @@ class BaseInstaller(object):
             id = db.Column(db.Integer, primary_key=True)
             version = db.Column(db.String(80))
             edition = db.Column(db.String(120))
+            path = db.Column(db.String(120))
+            active = db.Column(db.Boolean())
 
             __table_args__ = (
                 db.UniqueConstraint(
                     'version',
                     'edition',
-                    name='version_edition_unique'
+                    'path',
+                    name='version_edition_path_unique'
                 ),
             )
 
-            def __init__(self, version, edition):
+            def __init__(self, version, edition, path, active):
                 self.version = version
                 self.edition = edition
+                self.path = path
+                self.active = active
 
             def __repr__(self):
                 return '<Distribution {0} {1}>'.format(self.version,
-                                                       self.edition)
+                                                       self.edition,
+                                                       self.path,
+                                                       self.active)
 
         return Distribution
 
@@ -173,7 +189,7 @@ class BaseInstaller(object):
              }
         )
 
-    def install(self, version, edition, use_cache=True, destination=None):
+    def _install(self, version, edition, use_cache=True, destination=None):
         """
         Installs the downloaded PyCharm file.
 
@@ -189,15 +205,27 @@ class BaseInstaller(object):
             destination = self._read_destination_from_config_ini()
 
         downloaded_file = self.download(version, edition, use_cache=use_cache)
-        installed = self.setup(downloaded_file, destination)
+        installed = self.install(downloaded_file, destination)
 
         installation_dir = destination or self.installation_dir
 
         if installed:
-            self._write_distribution_info_to_db(version, edition)
+            self._write_distribution_info_to_db(version,
+                                                edition,
+                                                installation_dir)
             return (True, installation_dir, '')
         else:
             return (False, installation_dir, '')
+
+    def install(self, file, destination=None):
+        """
+        This method should return True on success. Otherwise considered to
+        be failed.
+
+        :param file:
+        :return bool:
+        """
+        raise NotImplemented
 
     def _write_destination_info_to_config_ini(self, destination):
         """
@@ -232,7 +260,8 @@ class BaseInstaller(object):
 
         return destination
 
-    def _write_distribution_info_to_db(self, version, edition):
+    def _write_distribution_info_to_db(self, version, edition,
+                                       installation_dir):
         """
         Writes distribution data into the database. Returns True on success
         and False on duplicates.
@@ -241,42 +270,68 @@ class BaseInstaller(object):
         :param str edition:
         :return bool:
         """
-        # Save distribution.
-        distribution = self.distribution_cls(version, edition)
-        self.db.session.add(distribution)
+        # First of all, since we're about to set the distribution as default,
+        # we need to mark existing one as non-active.
+        self.distribution_cls \
+            .query \
+            .filter_by(path=installation_dir, active=True) \
+            .update({"active": False})
+        self.db.session.commit()
+
+
+        # Now save the distribution.
+        distribution = self.distribution_cls(version,
+                                             edition,
+                                             installation_dir,
+                                             True)
         try:
+            self.db.session.add(distribution)
             self.db.session.commit()
             return True
         except IntegrityError as err:
+            self.db.session.rollback()
+            self.distribution_cls \
+                .query \
+                .filter_by(version=version, edition=edition, path=installation_dir) \
+                .update({"active": True})
+            self.db.session.commit()
+
             return False
 
-    def versions(self):
+    def _versions(self):
         """
         Gets installed versions.
 
         :return:
         """
-        return ["{0} {1}".format(dist.version, dist.edition)
+        return ["{0}        {1}        {2}        {3}".format(dist.version,
+                                         dist.edition,
+                                         dist.path,
+                                         "(active)" if dist.active else "")
                 for dist in self.distribution_cls.query.all()]
 
-    def uninstall(self, version, edition):
+    def versions(self):
+        return self._versions()
+
+    def _uninstall(self, version, edition):
         """
 
         :param version:
         :param edition:
         :return:
         """
+        return self.uninstall(version, edition)
+
+    def uninstall(self, version, edition):
         raise NotImplemented
 
-    def setup(self, file, destination=None):
-        """
-        This method should return True on success. Otherwise considered to
-        be failed.
-
-        :param file:
-        :return bool:
-        """
-        raise NotImplemented
+    def _activate(self, version, edition):
+        activated, installation_dir, message = self.activate(version, edition)
+        if activated:
+            self._write_distribution_info_to_db(version,
+                                                edition,
+                                                installation_dir)
+        return (activated, installation_dir, message)
 
     def activate(self, version, edition):
         """

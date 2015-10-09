@@ -15,7 +15,7 @@ Must haves
 + When installing from PyPI and then charmy install, gives the following
   error message:
   """
-  /home/foreverchild/.virtualenvs/charmy2/bin/python: bad interpreter:
+  /path/to/env/charmy2/bin/python: bad interpreter:
   No such file or directory
   """
 + When having installed with default settings (no --destination provided),

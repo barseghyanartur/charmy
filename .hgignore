@@ -5,6 +5,7 @@ syntax: regexp
 \.gitignore~
 \.tox/
 ^var/
+\.idea/
 
 ^build/
 ^builddocs/

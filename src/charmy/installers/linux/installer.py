@@ -19,7 +19,7 @@ class BaseLinuxInstaller(BaseInstaller):
     latest_installation_dir = LATEST_INSTALLATION_DIR
     latest_installation_exec = LINUX_LATEST_INSTALLATION_EXEC
 
-    def setup(self, file, destination=None):
+    def install(self, file, destination=None):
         """
 
         :param file:

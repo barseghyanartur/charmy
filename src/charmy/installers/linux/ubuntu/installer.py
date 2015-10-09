@@ -12,14 +12,14 @@ class UbuntuInstaller(BaseLinuxInstaller):
     """
     os = UID
 
-    def setup(self, file, destination=None):
+    def install(self, file, destination=None):
         """
 
         :param file:
         :return:
         """
         # First do as parent does
-        installed = super(UbuntuInstaller, self).setup(file, destination)
+        installed = super(UbuntuInstaller, self).install(file, destination)
 
         # If installation directory does not yet exist, create it.
         installation_dir = destination or self.installation_dir

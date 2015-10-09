@@ -10,7 +10,7 @@ import argparse
 
 from ..constants import (
     DEFAULT_EDITION, ACTIONS, ACTION_INSTALL, ACTION_ACTIVATE, ACTION_VERSIONS,
-    ACTION_UNINSTALL, ACTION_CHECK_LATEST_AVAILABLE
+    ACTION_UNINSTALL, ACTION_CHECK_LATEST_AVAILABLE, ACTION_RESET_SETTINGS
 )
 from ..utils import get_installer
 from ..helpers import detect_latest_version
@@ -84,7 +84,7 @@ def main():
             print("  Installing PyCharm version {0} ({1} edition)"
                   "".format(kwargs_install.get('version', None),
                             kwargs_install.get('edition', None)))
-            res = installer.install(**kwargs_install)
+            res = installer._install(**kwargs_install)
             if res[0]:
                 print("  Successfully installed to {0}".format(res[1]))
             else:
@@ -94,7 +94,7 @@ def main():
             print("  Activating PyCharm version {0} ({1} edition)"
                   "".format(kwargs_install.get('version', None),
                             kwargs_install.get('edition', None)))
-            res = installer.activate(**kwargs_activate)
+            res = installer._activate(**kwargs_activate)
             if res[0]:
                 print("  Successfully activated in {0}".format(res[1]))
             else:
@@ -107,7 +107,7 @@ def main():
                 print("  - {0}".format(r))
 
         elif args.action == ACTION_UNINSTALL:
-            res = installer.uninstall(**kwargs_uninstall)
+            res = installer._uninstall(**kwargs_uninstall)
             #print(res)
 
         elif args.action == ACTION_CHECK_LATEST_AVAILABLE:
@@ -117,6 +117,9 @@ def main():
             else:
                 print("  Could not fetch information on latest version "
                       "available ")
+
+        elif args.action == ACTION_RESET_SETTINGS:
+            installer.drop_db()
 
 
 if __name__ == "__main__":

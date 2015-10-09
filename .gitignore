@@ -5,6 +5,7 @@
 /.hg/
 /.tox/
 /var/
+/.idea/
 
 /MINDBUCKET.rst
 /build/

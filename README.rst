@@ -1,12 +1,10 @@
 ======
 charmy
 ======
-An automated PyCharm installer.
+An automated PyCharm installer for Linux.
 
 Supported systems
 =================
-At the moment works for Linux only.
-
 Although `charmy` would work on any Linux system (download, sym-link), some
 extra things, like creating a `.desktop` file for Ubuntu launcher, are done for
 specific systems only.
@@ -74,6 +72,10 @@ want to change installation directory).
 Check for the latest available version (without installing it)::
 
     charmy check-latest-available
+
+Clear `charmy` settings (destination and the database drop)::
+
+    charmy reset-settings
 
 Ubuntu
 ------
