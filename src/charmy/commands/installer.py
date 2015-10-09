@@ -10,7 +10,7 @@ import argparse
 
 from ..constants import (
     DEFAULT_EDITION, ACTIONS, ACTION_INSTALL, ACTION_ACTIVATE, ACTION_VERSIONS,
-    ACTION_UNINSTALL
+    ACTION_UNINSTALL, ACTION_CHECK_LATEST_AVAILABLE
 )
 from ..utils import get_installer
 from ..helpers import detect_latest_version
@@ -41,6 +41,7 @@ def main():
     kwargs_versions = {}
     kwargs_uninstall = {}
 
+    latest_version = None
     if args.version:
         kwargs_install.update({'version': args.version})
         kwargs_activate.update({'version': args.version})
@@ -108,6 +109,14 @@ def main():
         elif args.action == ACTION_UNINSTALL:
             res = installer.uninstall(**kwargs_uninstall)
             #print(res)
+
+        elif args.action == ACTION_CHECK_LATEST_AVAILABLE:
+            res = latest_version or detect_latest_version()
+            if res:
+                print("  {0}".format(res))
+            else:
+                print("  Could not fetch information on latest version "
+                      "available ")
 
 
 if __name__ == "__main__":

@@ -71,6 +71,10 @@ Note, that `charmy` remembers your last destination, so once you have
 specified a destination, you don't have to specify it again (unless you
 want to change installation directory).
 
+Check for the latest available version (without installing it)::
+
+    charmy check-latest-available
+
 Ubuntu
 ------
 When installing on Ubuntu, `charmy` creates a `.desktop` file for to be drag

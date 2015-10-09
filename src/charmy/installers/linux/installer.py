@@ -106,4 +106,4 @@ class BaseLinuxInstaller(BaseInstaller):
         # Symlink executable.
         os.symlink(exec_file, latest_installation_exec)
 
-        return (True, destination, '')
+        return (True, installation_dir, '')

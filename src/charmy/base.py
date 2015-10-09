@@ -191,11 +191,13 @@ class BaseInstaller(object):
         downloaded_file = self.download(version, edition, use_cache=use_cache)
         installed = self.setup(downloaded_file, destination)
 
+        installation_dir = destination or self.installation_dir
+
         if installed:
             self._write_distribution_info_to_db(version, edition)
-            return (True, destination, '')
+            return (True, installation_dir, '')
         else:
-            return (False, destination, '')
+            return (False, installation_dir, '')
 
     def _write_destination_info_to_config_ini(self, destination):
         """
