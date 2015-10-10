@@ -1,22 +1,11 @@
-charmy.commands package
-=======================
+commands Package
+================
 
-Submodules
-----------
-
-charmy.commands.installer module
---------------------------------
+:mod:`installer` Module
+-----------------------
 
 .. automodule:: charmy.commands.installer
     :members:
     :undoc-members:
     :show-inheritance:
 
-
-Module contents
----------------
-
-.. automodule:: charmy.commands
-    :members:
-    :undoc-members:
-    :show-inheritance:

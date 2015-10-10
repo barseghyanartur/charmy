@@ -1,5 +1,5 @@
-charmy.installers package
-=========================
+installers Package
+==================
 
 Subpackages
 -----------
@@ -8,10 +8,3 @@ Subpackages
 
     charmy.installers.linux
 
-Module contents
----------------
-
-.. automodule:: charmy.installers
-    :members:
-    :undoc-members:
-    :show-inheritance:
