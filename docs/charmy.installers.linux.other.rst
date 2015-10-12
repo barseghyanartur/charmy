@@ -1,19 +1,22 @@
-other Package
-=============
+charmy.installers.linux.other package
+=====================================
 
-:mod:`other` Package
---------------------
+Submodules
+----------
 
-.. automodule:: charmy.installers.linux.other
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`installer` Module
------------------------
+charmy.installers.linux.other.installer module
+----------------------------------------------
 
 .. automodule:: charmy.installers.linux.other.installer
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+Module contents
+---------------
+
+.. automodule:: charmy.installers.linux.other
+    :members:
+    :undoc-members:
+    :show-inheritance:

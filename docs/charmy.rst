@@ -1,45 +1,5 @@
-charmy Package
+charmy package
 ==============
-
-:mod:`charmy` Package
----------------------
-
-.. automodule:: charmy.__init__
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`base` Module
-------------------
-
-.. automodule:: charmy.base
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`constants` Module
------------------------
-
-.. automodule:: charmy.constants
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`helpers` Module
----------------------
-
-.. automodule:: charmy.helpers
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-:mod:`utils` Module
--------------------
-
-.. automodule:: charmy.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 Subpackages
 -----------
@@ -49,3 +9,46 @@ Subpackages
     charmy.commands
     charmy.installers
 
+Submodules
+----------
+
+charmy.base module
+------------------
+
+.. automodule:: charmy.base
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+charmy.constants module
+-----------------------
+
+.. automodule:: charmy.constants
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+charmy.helpers module
+---------------------
+
+.. automodule:: charmy.helpers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+charmy.utils module
+-------------------
+
+.. automodule:: charmy.utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: charmy
+    :members:
+    :undoc-members:
+    :show-inheritance:

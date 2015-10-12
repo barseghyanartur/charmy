@@ -25,6 +25,9 @@ Must haves
   and then activate another, the following message is shown:
   "Successfully activated in None"
 + Make a command to fetch the latest version available: charmy latest
+- Add quick start to documentation, including notes on installing in
+  virtualenv (since that's the recommended way to install) and making sure
+  that there are no running PyCharm instances, when installing new versions.
 - Make a syncdb command to sync locally installed PyCharm versions to the
   database.
 - In the versions command output, make clear which version is currently active.

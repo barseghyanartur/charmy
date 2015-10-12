@@ -33,22 +33,7 @@ Usage and examples
 ==================
 Basics
 ------
-Install latest version of the PyCharm. Let's assume the you want
-to install community edition version 4.5.4::
-
-    charmy install --version=4.5.4 --edition=community
-
-List installed PyCharm versions::
-
-    charmy versions
-
-Switch between installed PyCharm versions (imagine, you have both 4.5.3
-and 4.5.4 installed and want to switch back to previous version)::
-
-    charmy activate --version=4.5.3 --edition=community
-
-If you don't have a version preference and just want to install the latest 
-version available (defaults to community edition), just type::
+Install the latest version of PyCharm (defaults to community edition)::
 
     charmy install
 
@@ -60,10 +45,24 @@ Install the latest professional version::
 
     charmy install --edition=professional
 
+Install specific version of the PyCharm. Let's assume the you want
+to install community edition version 4.5.4::
+
+    charmy install --version=4.5.4 --edition=community
+
+Switch between installed PyCharm versions (imagine, you have both 4.5
+and 4.5.4 installed and want to switch back to previous version)::
+
+    charmy activate --version=4.5 --edition=community
+
+List installed PyCharm versions::
+
+    charmy versions
+
 By default `charmy` installs PyCharm in the `PyCharm` directory. If you want it
 to be installed elsewhere provide --destination directive::
 
-    charmy install --destination=/home/user/pycharm/
+    charmy install --destination=/home/user/my-pycharm-installation-directory/
 
 Note, that `charmy` remembers your last destination, so once you have
 specified a destination, you don't have to specify it again (unless you
