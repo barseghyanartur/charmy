@@ -6,7 +6,7 @@ from charmy.base import BaseInstaller
 from charmy.constants import (
     PLATFORM_LINUX, LINUX_EXTENSION, LINUX_INSTALLATION_DIR, LINUX_TEMP_DIR,
     LATEST_INSTALLATION_DIR, LINUX_LATEST_INSTALLATION_EXEC, LINUX_CONFIG_DIR,
-    LINUX_INSTALLATION_EXEC
+    LINUX_INSTALLATION_EXEC, EDITION_COMMUNITY
 )
 
 class BaseLinuxInstaller(BaseInstaller):
@@ -19,7 +19,7 @@ class BaseLinuxInstaller(BaseInstaller):
     latest_installation_dir = LATEST_INSTALLATION_DIR
     latest_installation_exec = LINUX_LATEST_INSTALLATION_EXEC
 
-    def install(self, file, destination=None):
+    def install(self, file, version, edition, destination=None):
         """
 
         :param file:
@@ -43,7 +43,7 @@ class BaseLinuxInstaller(BaseInstaller):
         archive.close()
 
         # This is the new of directory to which the files were extracted.
-        distribution_dir = new_file.replace('.{0}'.format(LINUX_EXTENSION), '')
+        #distribution_dir = new_file.replace('.{0}'.format(LINUX_EXTENSION), '')
 
         latest_installation_dir = os.path.join(installation_dir,
                                                self.latest_installation_dir)
@@ -51,6 +51,17 @@ class BaseLinuxInstaller(BaseInstaller):
         # First removing old symlinks.
         if os.path.exists(latest_installation_dir):
             os.remove(latest_installation_dir)
+
+        if edition == EDITION_COMMUNITY:
+            distribution_dir = os.path.join(
+                installation_dir,
+                "pycharm-{0}-{1}".format(edition, version)
+            )
+        else:
+            distribution_dir = os.path.join(
+                installation_dir,
+                "pycharm-{0}".format(version)
+            )
 
         # Symlink directory.
         os.symlink(distribution_dir, latest_installation_dir)
@@ -85,10 +96,17 @@ class BaseLinuxInstaller(BaseInstaller):
         if os.path.exists(latest_installation_dir):
             os.remove(latest_installation_dir)
 
-        distribution_dir = os.path.join(
-            installation_dir,
-            "pycharm-{0}-{1}".format(edition, version)
-        )
+        if edition == EDITION_COMMUNITY:
+            distribution_dir = os.path.join(
+                installation_dir,
+                "pycharm-{0}-{1}".format(edition, version)
+            )
+        else:
+            distribution_dir = os.path.join(
+                installation_dir,
+                "pycharm-{0}".format(version)
+            )
+
         # Symlink directory.
         os.symlink(distribution_dir, latest_installation_dir)
 

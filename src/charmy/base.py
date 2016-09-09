@@ -1,9 +1,3 @@
-__title__ = 'charmy.base'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2015 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
-__all__ = ('BaseInstaller',)
-
 import os
 
 from six.moves import configparser
@@ -19,9 +13,15 @@ from .constants import (
 )
 from .helpers import download_file
 
+__title__ = 'charmy.base'
+__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__copyright__ = '2015 Artur Barseghyan'
+__license__ = 'GPL 2.0/LGPL 2.1'
+__all__ = ('BaseInstaller',)
+
+
 class BaseInstaller(object):
-    """
-    Base installer.
+    """Base installer.
 
         - uid (str): Unique identifier of the installer.
         - platform (str): Platform.
@@ -41,8 +41,8 @@ class BaseInstaller(object):
                                          which would sym-link to latest
                                          PyCharm executable.
         - db_ready (bool): Indicates whether database is ready.
-
     """
+
     os = None
     platform = None
     installation_dir = None
@@ -54,7 +54,7 @@ class BaseInstaller(object):
     db_ready = False # Indicates whether database is ready
 
     def __init__(self, *args, **kwargs):
-        """
+        """Constructor.
 
         :param args:
         :param kwargs:
@@ -78,6 +78,7 @@ class BaseInstaller(object):
         self._sync_db()
 
     def _create_dirs(self):
+        """Create dirs."""
         dirs = (
             self.installation_dir,
             self.config_dir,
@@ -90,13 +91,15 @@ class BaseInstaller(object):
         return True
 
     def _create_files(self):
+        """Create files."""
         if not os.path.isfile(self.config_ini_filename):
             config_ini_file = open(self.config_ini_filename, 'w')
             config_ini_file.close()
 
     def _prepare_db(self):
-        """
-        Prepare the database (create if not exist). Prepare the models.
+        """Prepare the database (create if not exist).
+
+        Prepare the models.
 
         :return:
         """
@@ -109,8 +112,7 @@ class BaseInstaller(object):
         self.db_ready = True
 
     def drop_db(self):
-        """
-        Drops the database.
+        """Drop the database.
 
         :return:
         """
@@ -118,17 +120,15 @@ class BaseInstaller(object):
             os.remove(self.db_name)
 
     def _get_distribution_class(self):
-        """
-        Gets the `Distribution` model for saving installed distributions.
+        """Get the `Distribution` model for saving installed distributions.
 
         :return:
         """
         db = self.db
 
         class Distribution(db.Model):
-            """
-            Distribution model for saving installed distributions.
-            """
+            """Distribution model for saving installed distributions."""
+
             id = db.Column(db.Integer, primary_key=True)
             version = db.Column(db.String(80))
             edition = db.Column(db.String(120))
@@ -145,12 +145,14 @@ class BaseInstaller(object):
             )
 
             def __init__(self, version, edition, path, active):
+                """Constructor."""
                 self.version = version
                 self.edition = edition
                 self.path = path
                 self.active = active
 
             def __repr__(self):
+                """Representation."""
                 return '<Distribution {0} {1}>'.format(self.version,
                                                        self.edition,
                                                        self.path,
@@ -159,8 +161,8 @@ class BaseInstaller(object):
         return Distribution
 
     def _sync_db(self):
-        """
-        Creates database if not exist.
+        """Create database if not exist.
+
         :return:
         """
         if not self.db_ready:
@@ -168,8 +170,8 @@ class BaseInstaller(object):
         self.db.create_all()
 
     def download(self, version, edition, use_cache=True):
-        """
-        Downloads the PyCharm
+        """Download the PyCharm.
+
         :param version:
         :param edition:
         :return:
@@ -181,6 +183,12 @@ class BaseInstaller(object):
         return downloaded_file
 
     def _build_download_link(self, version, edition):
+        """Build download link.
+
+        :param version:
+        :param edition:
+        :return str:
+        """
         return DOWNLOAD_LINK_PATTERN.format(
             **{
                 'edition': edition,
@@ -189,46 +197,8 @@ class BaseInstaller(object):
              }
         )
 
-    def _install(self, version, edition, use_cache=True, destination=None):
-        """
-        Installs the downloaded PyCharm file.
-
-        :param str version:
-        :param str edition:
-        :param bool use_cache:
-        :param str destination:
-        :return tuple: (success, destination, message)
-        """
-        if destination:
-            self._write_destination_info_to_config_ini(destination)
-        else:
-            destination = self._read_destination_from_config_ini()
-
-        downloaded_file = self.download(version, edition, use_cache=use_cache)
-        installed = self.install(downloaded_file, destination)
-
-        installation_dir = destination or self.installation_dir
-
-        if installed:
-            self._write_distribution_info_to_db(version,
-                                                edition,
-                                                installation_dir)
-            return (True, installation_dir, '')
-        else:
-            return (False, installation_dir, '')
-
-    def install(self, file, destination=None):
-        """
-        This method should return True on success. Otherwise considered to
-        be failed.
-
-        :param file:
-        :return bool:
-        """
-        raise NotImplemented
-
     def _write_destination_info_to_config_ini(self, destination):
-        """
+        """Write destination info to the config ini.
 
         :param str destination:
         :return:
@@ -241,8 +211,7 @@ class BaseInstaller(object):
         config_ini_file.close()
 
     def _read_destination_from_config_ini(self):
-        """
-        Reads destination from config ini.
+        """Read destination from config ini.
 
         :return str:
         """
@@ -262,9 +231,9 @@ class BaseInstaller(object):
 
     def _write_distribution_info_to_db(self, version, edition,
                                        installation_dir):
-        """
-        Writes distribution data into the database. Returns True on success
-        and False on duplicates.
+        """Write distribution data into the database.
+
+        Return True on success and False on duplicates.
 
         :param str version:
         :param str edition:
@@ -292,15 +261,98 @@ class BaseInstaller(object):
             self.db.session.rollback()
             self.distribution_cls \
                 .query \
-                .filter_by(version=version, edition=edition, path=installation_dir) \
+                .filter_by(version=version,
+                           edition=edition,
+                           path=installation_dir) \
                 .update({"active": True})
             self.db.session.commit()
 
             return False
 
-    def _versions(self):
+    def _install(self, version, edition, use_cache=True, destination=None):
+        """Install the downloaded PyCharm file.
+
+        :param str version:
+        :param str edition:
+        :param bool use_cache:
+        :param str destination:
+        :return tuple: (success, destination, message)
         """
-        Gets installed versions.
+        if destination:
+            self._write_destination_info_to_config_ini(destination)
+        else:
+            destination = self._read_destination_from_config_ini()
+
+        downloaded_file = self.download(version, edition, use_cache=use_cache)
+        installed = self.install(downloaded_file, destination, version, edition)
+
+        installation_dir = destination or self.installation_dir
+
+        if installed:
+            self._write_distribution_info_to_db(version,
+                                                edition,
+                                                installation_dir)
+            return (True, installation_dir, '')
+        else:
+            return (False, installation_dir, '')
+
+    def install(self, file, version, edition, destination=None):
+        """Install.
+
+        This method should return True on success. Otherwise considered to
+        be failed.
+
+        :param file:
+        :return bool:
+        """
+        raise NotImplemented
+
+    def _uninstall(self, version, edition):
+        """Uninstall PyCharm version/edition internal method.
+
+        :param version:
+        :param edition:
+        :return:
+        """
+        return self.uninstall(version, edition)
+
+    def uninstall(self, version, edition):
+        """Uninstall PyCharm.
+
+        :param version:
+        :param edition:
+        :return:
+        """
+        raise NotImplemented
+
+    def _activate(self, version, edition):
+        """Activate PyCharm version/edition internal method.
+
+        :param version:
+        :param edition:
+        :return:
+        """
+        activated, installation_dir, message = self.activate(version, edition)
+        if activated:
+            self._write_distribution_info_to_db(version,
+                                                edition,
+                                                installation_dir)
+        return (activated, installation_dir, message)
+
+    def activate(self, version, edition):
+        """Activate PyCharm version/edition.
+
+        This method should return a tuple (True, destination, message) on
+        success. Otherwise considered to be failed.
+
+        :param version:
+        :param edition:
+        :return:
+        """
+        raise NotImplemented
+
+    def _versions(self):
+        """List installed versions internal method.
 
         :return:
         """
@@ -311,35 +363,31 @@ class BaseInstaller(object):
                 for dist in self.distribution_cls.query.all()]
 
     def versions(self):
-        return self._versions()
+        """List installed PyCharm versions.
 
-    def _uninstall(self, version, edition):
-        """
-
-        :param version:
-        :param edition:
         :return:
         """
-        return self.uninstall(version, edition)
+        return self._versions()
 
-    def uninstall(self, version, edition):
-        raise NotImplemented
+    def _reset_settings(self):
+        """Reset settings internal method."""
+        self.reset_settings()
 
-    def _activate(self, version, edition):
-        activated, installation_dir, message = self.activate(version, edition)
-        if activated:
-            self._write_distribution_info_to_db(version,
-                                                edition,
-                                                installation_dir)
-        return (activated, installation_dir, message)
+    def reset_settings(self):
+        """Reset settings."""
+        return self.drop_db()
 
-    def activate(self, version, edition):
+    def _discover_installed_versions(self, destination=None):
+        """Discover installed versions internal method.
+
+        :return:
         """
-        This method should return a tuple (True, destination, message) on
-        success. Otherwise considered to be failed.
+        return self.discover_installed_versions()
 
-        :param version:
-        :param edition:
+    def discover_installed_versions(self, destination=None):
+        """Discover installed versions.
+
+        :param destination:
         :return:
         """
         raise NotImplemented

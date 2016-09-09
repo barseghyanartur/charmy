@@ -15,7 +15,7 @@ Must haves
 + When installing from PyPI and then charmy install, gives the following
   error message:
   """
-  /path/to/env/charmy2/bin/python: bad interpreter:
+  /path/to/env/charmy-env/bin/python: bad interpreter:
   No such file or directory
   """
 + When having installed with default settings (no --destination provided),
@@ -25,12 +25,14 @@ Must haves
   and then activate another, the following message is shown:
   "Successfully activated in None"
 + Make a command to fetch the latest version available: charmy latest
-- Add quick start to documentation, including notes on installing in
-  virtualenv (since that's the recommended way to install) and making sure
-  that there are no running PyCharm instances, when installing new versions.
-- Make a syncdb command to sync locally installed PyCharm versions to the
-  database.
-- In the versions command output, make clear which version is currently active.
++ In the versions command output, make clear which version is currently active.
++ Add notes on installing in virtualenv (since that's the recommended way to
+  install) and making sure that there are no running PyCharm instances, when
+  installing new versions.
+- Installing professional version doesn't work. If you try to do so, activating
+  the community version doesn't work either.
+- Make a `discover-installed-versions` command to discover locally installed
+  PyCharm versions and make appropriate database updates.
 
 Should haves
 ------------

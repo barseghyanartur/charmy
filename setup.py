@@ -6,7 +6,7 @@ try:
 except:
     readme = ''
 
-version = '0.1.4'
+version = '0.1.6'
 
 exec_dirs = [
     'src/charmy/bin/',
@@ -28,7 +28,7 @@ setup(
     name = 'charmy',
     version = version,
     description = ("Automated PyCharm installer for Linux."),
-    long_description=readme,
+    long_description = readme,
     classifiers = [
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.6",
@@ -56,5 +56,5 @@ setup(
     },
     scripts = ['src/charmy/bin/charmy',],
     license = 'GPL 2.0/LGPL 2.1',
-    install_requires = install_requires
+    install_requires = install_requires,
 )

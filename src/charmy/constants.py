@@ -1,11 +1,13 @@
+import os
+
 __title__ = 'charmy.constants'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2015 Artur Barseghyan'
+__copyright__ = '2015-2016 Artur Barseghyan'
 __license__ = 'GPL 2.0/LGPL 2.1'
 __all__ = (
     'BASE_DIR', 'LINUX_EXTENSION', 'PLATFORM_LINUX', 'PLATFORM_EXTENSIONS',
     'EDITION_PROFESSIONAL', 'EDITION_COMMUNITY', 'EDITIONS', 'DEFAULT_EDITION',
-    'DOWNLOAD_LINK_PATTERN', 'DOWNLOAD_PAGE_LINK', 'VERSION_JS_URL',
+    'DOWNLOAD_LINK_PATTERN', 'DOWNLOAD_PAGE_LINK', 'VERSION_PAGE_URL_PATTERN',
     'ACTION_INSTALL', 'ACTION_UNINSTALL', 'ACTION_ACTIVATE', 'ACTION_VERSIONS',
     'ACTION_CHECK_LATEST_AVAILABLE', 'ACTION_RESET_SETTINGS', 'ACTIONS',
     'DOWNLOAD_CACHE_DIR',
@@ -13,9 +15,9 @@ __all__ = (
     'LINUX_LATEST_INSTALLATION_EXEC', 'LINUX_TEMP_DIR', 'LINUX_CONFIG_DIR',
     'LINUX_INSTALLATION_EXEC', 'LINUX_INSTALLATION_ICON',
     'CONFIG_SECTION_PATHS', 'CONFIG_OPTION_DESTINATION',
+    'EDITION_PROFESSIONAL_CODE', 'EDITION_COMMUNITY_CODE',
+    'EDITIONS_CODE_MAPPING',
 )
-
-import os
 
 def not_implemented():
     """
@@ -65,8 +67,14 @@ DEFAULT_EDITION = EDITION_COMMUNITY
 DOWNLOAD_LINK_PATTERN = "http://download-cf.jetbrains.com/python/pycharm-" \
                         "{edition}-{version}.{extension}"
 DOWNLOAD_PAGE_LINK = 'https://www.jetbrains.com/pycharm/download/index.html'
-VERSION_JS_URL = 'https://www.jetbrains.com/js2/version.js'
-
+VERSION_PAGE_URL_PATTERN = 'https://data.services.jetbrains.com/products/' \
+                           'releases?code={0}&latest=true&type=release'
+EDITION_PROFESSIONAL_CODE = 'PCP'
+EDITION_COMMUNITY_CODE = 'PCC'
+EDITIONS_CODE_MAPPING = {
+    EDITION_PROFESSIONAL: EDITION_PROFESSIONAL_CODE,
+    EDITION_COMMUNITY: EDITION_COMMUNITY_CODE
+}
 # ***************************************************************************
 # ******************************** Actions **********************************
 # ***************************************************************************
@@ -76,13 +84,15 @@ ACTION_ACTIVATE = 'activate'
 ACTION_VERSIONS = 'versions'
 ACTION_CHECK_LATEST_AVAILABLE = 'check-latest-available'
 ACTION_RESET_SETTINGS = 'reset-settings'
+ACTION_DISCOVER_INSTALLED_VERSIONS = 'discover-installed-versions'
 ACTIONS = (
     ACTION_INSTALL,
     ACTION_ACTIVATE,
     ACTION_UNINSTALL,
     ACTION_VERSIONS,
     ACTION_CHECK_LATEST_AVAILABLE,
-    ACTION_RESET_SETTINGS
+    ACTION_RESET_SETTINGS,
+    ACTION_DISCOVER_INSTALLED_VERSIONS,
 )
 
 # ***************************************************************************
