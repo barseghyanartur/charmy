@@ -1,11 +1,5 @@
 from __future__ import print_function
 
-__title__ = 'charmy.commands.installer'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2015 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
-__all__ = ('main',)
-
 import argparse
 
 from ..constants import (
@@ -15,9 +9,15 @@ from ..constants import (
 from ..utils import get_installer
 from ..helpers import detect_latest_version
 
+__title__ = 'charmy.commands.installer'
+__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__copyright__ = '2015-2016 Artur Barseghyan'
+__license__ = 'GPL 2.0/LGPL 2.1'
+__all__ = ('main',)
+
+
 def main():
-    """
-    PyCharm installer.
+    """PyCharm installer.
 
     :return:
     """

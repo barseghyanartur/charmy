@@ -6,7 +6,7 @@ try:
 except:
     readme = ''
 
-version = '0.1.4'
+version = '0.1.7'
 
 exec_dirs = [
     'src/charmy/bin/',
@@ -25,11 +25,11 @@ install_requires = [
 ]
 
 setup(
-    name = 'charmy',
-    version = version,
-    description = ("Automated PyCharm installer for Linux."),
+    name='charmy',
+    version=version,
+    description=("Automated PyCharm installer for Linux."),
     long_description=readme,
-    classifiers = [
+    classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
@@ -44,17 +44,17 @@ setup(
         "Topic :: Software Development",
         "Topic :: Text Editors :: Integrated Development Environments (IDE)",
     ],
-    keywords = 'pycharm, installer',
-    author = 'Artur Barseghyan',
-    author_email = 'artur.barseghyan@gmail.com',
-    url = 'https://github.com/barseghyanartur/charmy',
-    package_dir = {'': 'src'},
-    packages = find_packages(where='./src'),
-    include_package_data = True,
-    package_data = {
+    keywords='pycharm, installer',
+    author='Artur Barseghyan',
+    author_email='artur.barseghyan@gmail.com',
+    url='https://github.com/barseghyanartur/charmy',
+    package_dir={'': 'src'},
+    packages=find_packages(where='./src'),
+    include_package_data=True,
+    package_data={
         'charmy': execs,
     },
-    scripts = ['src/charmy/bin/charmy',],
-    license = 'GPL 2.0/LGPL 2.1',
-    install_requires = install_requires
+    scripts=['src/charmy/bin/charmy',],
+    license='GPL 2.0/LGPL 2.1',
+    install_requires=install_requires
 )

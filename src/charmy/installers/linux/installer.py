@@ -9,9 +9,16 @@ from charmy.constants import (
     LINUX_INSTALLATION_EXEC
 )
 
+__title__ = 'charmy.installers.linux'
+__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__copyright__ = '2015-2016 Artur Barseghyan'
+__license__ = 'GPL 2.0/LGPL 2.1'
+__all__ = ('BaseLinuxInstaller',)
+
+
 class BaseLinuxInstaller(BaseInstaller):
-    """
-    """
+    """Base linux installer."""
+
     platform = PLATFORM_LINUX
     installation_dir = LINUX_INSTALLATION_DIR
     config_dir = LINUX_CONFIG_DIR
@@ -20,9 +27,10 @@ class BaseLinuxInstaller(BaseInstaller):
     latest_installation_exec = LINUX_LATEST_INSTALLATION_EXEC
 
     def install(self, file, destination=None):
-        """
+        """Install.
 
         :param file:
+        :param destination:
         :return:
         """
         # If installation directory does not yet exist, create it.
@@ -72,8 +80,10 @@ class BaseLinuxInstaller(BaseInstaller):
         return True
 
     def activate(self, version, edition):
-        """
+        """Activate.
 
+        :param version:
+        :param edition:
         :return:
         """
         destination = self._read_destination_from_config_ini()

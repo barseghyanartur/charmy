@@ -6,16 +6,23 @@ from ..installer import BaseLinuxInstaller
 from . import UID
 from .constants import LAUNCHER_CONTENT_PATTERN
 
+__title__ = 'charmy.installers.linux.ubuntu'
+__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__copyright__ = '2015-2016 Artur Barseghyan'
+__license__ = 'GPL 2.0/LGPL 2.1'
+__all__ = ('UbuntuInstaller',)
+
+
 class UbuntuInstaller(BaseLinuxInstaller):
-    """
-    Ubuntu specific installer.
-    """
+    """Ubuntu specific installer."""
+
     os = UID
 
     def install(self, file, destination=None):
-        """
+        """Install.
 
         :param file:
+        :param destination:
         :return:
         """
         # First do as parent does

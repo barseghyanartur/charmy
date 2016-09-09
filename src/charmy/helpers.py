@@ -1,22 +1,25 @@
-__title__ = 'charmy.helpers'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2015 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
-__all__ = (
-    'download_file', 'detect_latest_version',
-)
-
 import os
 import re
 
 import requests
 
-from .constants import BASE_DIR, DOWNLOAD_PAGE_LINK, VERSION_JS_URL
+from .constants import (
+    BASE_DIR, DOWNLOAD_PAGE_LINK, VERSION_PAGE_URL_PATTERN,
+    EDITION_COMMUNITY, EDITIONS_CODE_MAPPING, DEFAULT_EDITION
+)
+
+__title__ = 'charmy.helpers'
+__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__copyright__ = '2015-2016 Artur Barseghyan'
+__license__ = 'GPL 2.0/LGPL 2.1'
+__all__ = (
+    'download_file', 'detect_latest_version',
+)
 
 def download_file(url, temp_dir, use_cache=True):
-    """
-    Downloads the file from given location and stores it locally. Returns
-    the local filename (full path).
+    """Download the file from given location and stores it locally.
+
+    Return the local filename (full path).
 
     :param str url: URL to download.
     :param str temp_dir: Full path to temporary directory to download files
@@ -45,20 +48,21 @@ def download_file(url, temp_dir, use_cache=True):
                 #f.flush() commented by recommendation from J.F.Sebastian
     return local_filename
 
-def detect_latest_version():
-    """
-    Detects the PyCharm latest version.
+def detect_latest_version(edition=DEFAULT_EDITION):
+    """Detect the PyCharm latest version.
 
+    :param str edition:
     :return:
     """
-    response = requests.get(VERSION_JS_URL, verify=False)
+    if not edition in EDITIONS_CODE_MAPPING:
+        edition = DEFAULT_EDITION
+    edition_code = EDITIONS_CODE_MAPPING.get(edition)
+    version_page_url = VERSION_PAGE_URL_PATTERN.format(edition_code)
+
+    response = requests.get(version_page_url, verify=False)
     if response.ok:
-        for line in response.iter_lines():
-            if line.startswith('var versionPyCharmLong = '):
-                version = re.search(
-                    'var versionPyCharmLong = "(.*)";',
-                    line,
-                    re.IGNORECASE
-                )
-                if version:
-                    return version.group(1)
+        version_data = response.json()
+        try:
+            return version_data[edition_code][0]['version']
+        except (KeyError, IndexError):
+            return None
