@@ -13,4 +13,4 @@ syntax: regexp
 ^dist/
 ^src/charmy\.egg-info
 ^src/charmy/var/(?!\.keep).+$
-
+^deb_dist/

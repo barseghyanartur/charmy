@@ -14,3 +14,4 @@
 /dist/
 /src/charmy.egg-info
 /src/charmy/var/*.*
+/deb_dist/
