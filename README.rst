@@ -5,7 +5,7 @@ An automated PyCharm installer for Linux.
 
 **Deprecation warning!**
 
-This package is no longer maintained. Switch to `JetBrains Toolbox` or install using `snap`.
+This package is no longer maintained. Switch to ``JetBrains Toolbox`` or install using ``snap``.
 
 Supported systems
 =================
