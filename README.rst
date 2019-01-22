@@ -3,6 +3,10 @@ charmy
 ======
 An automated PyCharm installer for Linux.
 
+**Deprecation warning!**
+
+This package is no longer maintained. Switch to `JetBrains Toolbox` or install using `snap`.
+
 Supported systems
 =================
 Although `charmy` would work on any Linux system (download, sym-link), some
